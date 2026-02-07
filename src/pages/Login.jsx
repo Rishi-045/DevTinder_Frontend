@@ -1,7 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { Eye, EyeOff } from "lucide-react";
+import { Link } from "react-router";
+import api from "../utils/axios";
 
 const formSchema = z.object({
   email: z
@@ -11,10 +14,12 @@ const formSchema = z.object({
   password: z
     .string()
     .min(1, "Password is required")
-    .min(6, "Password must be at least 6 characters").max(20, "Password must be at most 20 characters"),
+    .min(6, "Password must be at least 6 characters")
+    .max(20, "Password must be at most 20 characters"),
 });
 
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     handleSubmit,
@@ -23,11 +28,15 @@ const Login = () => {
     resolver: zodResolver(formSchema),
   });
 
-  const handleFormSubmit = (data) => {
-    console.log(data);
+  const handleFormSubmit = async (data) => {
+    try {
+      const res = await api.post("/login", data);
+      console.log(res.data);
+    } catch (err) {
+      console.error(err.message);
+    }
   };
 
-  console.log("Render Login Page");
   return (
     <div className="flex items-center justify-center min-h-screen">
       <form onSubmit={handleSubmit(handleFormSubmit)}>
@@ -36,22 +45,37 @@ const Login = () => {
           <h2 className="text-3xl font-bold text-center mb-2">Login</h2>
           <label className="label">Email</label>
           <input {...register("email")} className="input" placeholder="Email" />
-          <div>
-            <span className="text-red-500">{errors.email?.message}</span>
-          </div>
+
+          <span className="text-red-500">{errors.email?.message}</span>
 
           <label className="label">Password</label>
-          <input
-            {...register("password")}
-            className="input"
-            placeholder="Password"
-          />
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              {...register("password")}
+              className="input"
+              placeholder="Password"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute top-3 right-3"
+            >
+              {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
+            </button>
+          </div>
           <span className="text-red-500">{errors.password?.message}</span>
 
           <div>
             <a className="link link-hover">Forgot password?</a>
           </div>
           <button className="btn btn-soft btn-primary mt-4">Sign In</button>
+          <p className="mt-4 text-center">
+            Don't have an account?{" "}
+            <Link to="/signup" className="link link-primary">
+              Signup
+            </Link>
+          </p>
         </fieldset>
       </form>
     </div>
