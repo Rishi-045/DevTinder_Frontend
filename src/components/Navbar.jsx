@@ -1,7 +1,16 @@
 import React from "react";
-import { Link } from "react-router";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router";
+import { logout } from "../store/auth/authSlice";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login", { replace: true });
+  };
+
   return (
     <>
       <div className="navbar px-2 bg-base-300 shadow-sm">
@@ -41,7 +50,9 @@ const Navbar = () => {
                 <a>Settings</a>
               </li>
               <li>
-                <Link to="/login">Logout</Link>
+                <Link to="/login" onClick={handleLogout}>
+                  Logout
+                </Link>
               </li>
             </ul>
           </div>

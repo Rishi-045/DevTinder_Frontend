@@ -3,8 +3,11 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Eye, EyeOff } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import api from "../utils/axios";
+import toast from "react-hot-toast";
+import { loginSuccess } from "../store/auth/authSlice";
+import { useDispatch } from "react-redux";
 
 const formSchema = z.object({
   email: z
@@ -20,20 +23,25 @@ const formSchema = z.object({
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(formSchema),
   });
-
+  console.log("login page rendered");
   const handleFormSubmit = async (data) => {
     try {
       const res = await api.post("/login", data);
-      console.log(res.data);
+      dispatch(loginSuccess(res?.data))
+      toast.success("Login successful!");
+      navigate("/", { replace: true });
     } catch (err) {
       console.error(err.message);
+      toast.error(err?.response?.data?.message || "Something went wrong");
     }
   };
 
@@ -69,7 +77,12 @@ const Login = () => {
           <div>
             <a className="link link-hover">Forgot password?</a>
           </div>
-          <button className="btn btn-soft btn-primary mt-4">Sign In</button>
+          <button
+            className={`btn btn-soft btn-primary mt-4 disabled:opacity-70`}
+            disabled = {isSubmitting}
+          >
+            {isSubmitting ? "Signing In..." : "Sign In"}
+          </button>
           <p className="mt-4 text-center">
             Don't have an account?{" "}
             <Link to="/signup" className="link link-primary">

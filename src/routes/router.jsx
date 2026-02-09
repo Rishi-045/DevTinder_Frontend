@@ -6,6 +6,7 @@ import Profile from "../pages/Profile";
 import Login from "../pages/Login";
 import ErrorPage from "../pages/ErrorPage";
 import SignUp from "../pages/SignUp";
+import PublicRoute from "./PublicRoute";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/profile",
+        path: "profile",
         element: (
           <ProtectedRoute>
             <Profile />
@@ -33,11 +34,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />,
+    element: (
+      <PublicRoute>
+        <Login />
+      </PublicRoute>
+    ),
   },
   {
     path: "/signup",
-    element: <SignUp />,
+    element: (
+      <PublicRoute>
+        <SignUp />
+      </PublicRoute>
+    ),
   },
 ]);
 
