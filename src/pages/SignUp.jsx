@@ -3,7 +3,9 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { Eye, EyeOff } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import api from "../utils/axios";
+import toast from "react-hot-toast";
 
 const signUpSchema = z
   .object({
@@ -38,16 +40,25 @@ const signUpSchema = z
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(signUpSchema),
   });
 
-  const handleFormSubmit = (data) => {
-    console.log(data);
+  const handleFormSubmit = async (data) => {
+    try {
+      const res = await api.post("/signup", data);
+      console.log(res.data);
+      toast.success("Signup Successfully. Please Login.");
+      navigate("/login");
+    } catch (err) {
+      console.error(err.message);
+      toast.error(err.response.data.error || "Something went wrong.");
+    }
   };
 
   return (
@@ -115,18 +126,16 @@ const SignUp = () => {
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               className="absolute right-3 top-3 text-gray-500"
             >
-              {showConfirmPassword ? (
-                <EyeOff size={17} />
-              ) : (
-                <Eye size={17} />
-              )}
+              {showConfirmPassword ? <EyeOff size={17} /> : <Eye size={17} />}
             </button>
           </div>
           <span className="text-red-500">
             {errors.confirmPassword?.message}
           </span>
 
-          <button className="btn btn-soft btn-primary mt-4">Sign Up</button>
+          <button className={`btn btn-soft btn-primary mt-4 disabled:cursor-not-allowed disabled:opacity-70`} type="submit"
+          disabled={isSubmitting}
+          >{isSubmitting ? "Signing Up..." : "Sign Up"}</button>
           <p className="mt-4 text-center">
             Already have an account?{" "}
             <Link to="/login" className="link link-primary">

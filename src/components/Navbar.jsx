@@ -1,14 +1,25 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router";
 import { logout } from "../store/auth/authSlice";
+import api from "../utils/axios";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const dispatch = useDispatch();
+  const user = useSelector(store => store?.auth?.user)
+  console.log(user)
   const navigate = useNavigate();
-  const handleLogout = () => {
-    dispatch(logout());
-    navigate("/login", { replace: true });
+  const handleLogout = async () => {
+    try {
+      await api.post("/logout");
+      dispatch(logout());
+      navigate("/login", { replace: true });
+      toast.success("Logout Successfully.");
+    } catch (err) {
+      console.error(err.message);
+      toast.error("Logout Failed");
+    }
   };
 
   return (
@@ -31,8 +42,8 @@ const Navbar = () => {
             >
               <div className="w-10 rounded-full">
                 <img
-                  alt="Tailwind CSS Navbar component"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                  alt="User Profile Picture"
+                  src={user?.data?.photoUrl}
                 />
               </div>
             </div>

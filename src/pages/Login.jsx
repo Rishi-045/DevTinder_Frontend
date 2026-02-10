@@ -78,7 +78,7 @@ const Login = () => {
             <a className="link link-hover">Forgot password?</a>
           </div>
           <button
-            className={`btn btn-soft btn-primary mt-4 disabled:opacity-70`}
+            className={`btn btn-soft btn-primary mt-4 disabled:opacity-70 disabled:cursor-not-allowed`}
             disabled = {isSubmitting}
           >
             {isSubmitting ? "Signing In..." : "Sign In"}
