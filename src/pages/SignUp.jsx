@@ -52,12 +52,12 @@ const SignUp = () => {
   const handleFormSubmit = async (data) => {
     try {
       const res = await api.post("/signup", data);
-      console.log(res.data);
+      console.log(res?.data);
       toast.success("Signup Successfully. Please Login.");
       navigate("/login");
     } catch (err) {
       console.error(err.message);
-      toast.error(err.response.data.error || "Something went wrong.");
+      toast.error(err?.response?.data?.error || "Something went wrong.");
     }
   };
 
