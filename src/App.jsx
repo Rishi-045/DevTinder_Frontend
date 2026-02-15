@@ -1,11 +1,17 @@
-import React from "react";
-import Navbar from "./components/Navbar";
+import router from "./routes/router.jsx";
+import { Toaster } from "react-hot-toast";
+import { RouterProvider } from "react-router";
+import useAuthCheck from "./hooks/useAuthCheck.js";
+import { useSelector } from "react-redux";
 
 const App = () => {
+  useAuthCheck();
+  console.log("App rendered");
+
   return (
     <>
-      <Navbar />
-      <h1>App</h1>
+      <RouterProvider router={router} />
+      <Toaster position="top-right" reverseOrder={false} />
     </>
   );
 };

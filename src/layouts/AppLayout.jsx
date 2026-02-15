@@ -6,13 +6,13 @@ import Footer from "../components/Footer";
 const AppLayout = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
+     <header className="sticky top-0 z-10"> <Navbar /> </header>
       {/* child routes render here */}
       <main className="flex-grow">
         <Outlet />
       </main>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

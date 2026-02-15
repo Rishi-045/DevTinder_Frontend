@@ -7,8 +7,8 @@ import toast from "react-hot-toast";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const user = useSelector(store => store?.auth?.user)
-  console.log(user)
+  const user = useSelector((store) => store?.auth?.user);
+  console.log(user);
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
@@ -26,7 +26,9 @@ const Navbar = () => {
     <>
       <div className="navbar px-2 bg-base-300 shadow-sm">
         <div className="flex-1">
-          <a className="btn btn-ghost text-xl">devTinder</a>
+          <Link to="/" className="btn btn-ghost text-xl">
+            devTinder
+          </Link>
         </div>
         <div className="flex gap-2">
           {/* <input
@@ -41,10 +43,7 @@ const Navbar = () => {
               className="btn btn-ghost btn-circle avatar"
             >
               <div className="w-10 rounded-full">
-                <img
-                  alt="User Profile Picture"
-                  src={user?.data?.photoUrl}
-                />
+                <img alt="User Profile Picture" src={user?.photoUrl} />
               </div>
             </div>
             <ul

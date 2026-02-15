@@ -6,7 +6,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import api from "../utils/axios";
 import toast from "react-hot-toast";
-import { loginSuccess } from "../store/auth/authSlice";
+import { setUser } from "../store/auth/authSlice";
 import { useDispatch } from "react-redux";
 
 const formSchema = z.object({
@@ -36,7 +36,7 @@ const Login = () => {
   const handleFormSubmit = async (data) => {
     try {
       const res = await api.post("/login", data);
-      dispatch(loginSuccess(res?.data))
+      dispatch(setUser(res?.data?.data));
       toast.success("Login successful!");
       navigate("/", { replace: true });
     } catch (err) {
