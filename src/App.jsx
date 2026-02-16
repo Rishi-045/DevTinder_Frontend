@@ -2,7 +2,6 @@ import router from "./routes/router.jsx";
 import { Toaster } from "react-hot-toast";
 import { RouterProvider } from "react-router";
 import useAuthCheck from "./hooks/useAuthCheck.js";
-import { useSelector } from "react-redux";
 
 const App = () => {
   useAuthCheck();

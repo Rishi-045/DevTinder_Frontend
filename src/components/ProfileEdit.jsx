@@ -25,10 +25,13 @@ const profileEditSchema = z.object({
     .max(120, "Age must be less than or equal to 120")
     .optional(),
   gender: z
-    .enum(["male", "female", "other"], {
-      message: "Please select a valid gender",
-    })
-    .optional(),
+    .string()
+    .optional()
+    .transform((val) => (val === "" ? undefined : val))
+    .refine(
+      (val) => !val || ["male", "female", "other"].includes(val),
+      "Please select a valid gender",
+    ),
   skills: z
     .string()
     .transform((str) =>

@@ -40,8 +40,8 @@ const Login = () => {
       toast.success("Login successful!");
       navigate("/", { replace: true });
     } catch (err) {
-      console.error(err.message);
-      toast.error(err?.response?.data?.message || "Something went wrong");
+      console.error(err);
+      toast.error(err || "Something went wrong");
     }
   };
 
