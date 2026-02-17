@@ -21,21 +21,29 @@ const connectionsSlice = createSlice({
     loading: false,
     error: null,
   },
-  reducer: {},
+  reducers: {
+    resetConnections: (state) => {
+      state.connections = [];
+      state.loading = false;
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchConnections.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchConnections.fulfilled, (state,action) => {
+      .addCase(fetchConnections.fulfilled, (state, action) => {
         state.loading = false;
         state.connections = action.payload;
       })
-      .addCase(fetchConnections.rejected, (state,action) => {
+      .addCase(fetchConnections.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
   },
 });
+
+export const { resetConnections } = connectionsSlice.actions;
 
 export default connectionsSlice.reducer;

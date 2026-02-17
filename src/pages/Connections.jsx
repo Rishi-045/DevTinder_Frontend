@@ -11,6 +11,7 @@ const Connections = () => {
   const dispatch = useDispatch();
   console.log(connections);
   useEffect(() => {
+    if (connections.length === 0)
     dispatch(fetchConnections());
   }, []);
 
@@ -45,6 +46,11 @@ const Connections = () => {
           );
         })}
       </ul>
+      {connections.length === 0 && !loading && (
+        <div className="p-4 text-center text-sm opacity-60">
+          No connections at the moment.
+        </div>
+      )}
     </div>
   );
 };

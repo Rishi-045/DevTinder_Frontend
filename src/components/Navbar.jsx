@@ -5,6 +5,8 @@ import { logout } from "../store/auth/authSlice";
 import api from "../utils/axios";
 import toast from "react-hot-toast";
 import { resetFeed } from "../store/feed/feedSlice";
+import { resetRequests } from "../store/requests/requestSlice";
+import { resetConnections } from "../store/connections/connectionsSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -16,6 +18,8 @@ const Navbar = () => {
       await api.post("/logout");
       dispatch(logout());
       dispatch(resetFeed());
+      dispatch(resetConnections());
+      dispatch(resetRequests());
       navigate("/login", { replace: true });
       toast.success("Logout Successfully.");
     } catch (err) {

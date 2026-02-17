@@ -8,6 +8,7 @@ import ErrorPage from "../pages/ErrorPage";
 import SignUp from "../pages/SignUp";
 import PublicRoute from "./PublicRoute";
 import Connections from "../pages/Connections";
+import Requests from "../pages/Requests";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Connections />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "requests",
+        element: (
+          <ProtectedRoute>
+            <Requests />
           </ProtectedRoute>
         ),
       },

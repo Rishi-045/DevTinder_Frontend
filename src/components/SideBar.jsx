@@ -76,7 +76,7 @@ const SideBar = () => {
                 {/* Settings icon */}
                 <UserCheck className="mb-1 inline-block size-4" />
                 <span className="is-drawer-close:hidden">
-                  <NavLink to="/connections">Requests</NavLink>
+                  <NavLink to="/requests">Requests</NavLink>
                 </span>
               </div>
             </li>

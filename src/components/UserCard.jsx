@@ -34,24 +34,23 @@ const UserCard = ({ user, onLike, onIgnore, index }) => {
         </div>
       )}
 
-      {/* About (only if exists) */}
       {user?.about && (
         <p className="text-sm text-center text-gray-500 mt-2 line-clamp-3">
-          {user.about}
+          {user?.about}
         </p>
       )}
 
       {index === 0 && (
         <div className="flex gap-10 mt-4">
           <button
-            onClick={() => onIgnore(user._id)}
+            onClick={() => onIgnore(user?._id)}
             className="btn btn-secondary"
           >
             Ignore
           </button>
 
           <button
-            onClick={() => onLike(user._id)}
+            onClick={() => onLike(user?._id)}
             className="btn btn-primary"
           >
             Like
