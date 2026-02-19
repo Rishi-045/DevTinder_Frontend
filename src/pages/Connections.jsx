@@ -1,18 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchConnections } from "../store/connections/connectionsSlice";
-import Loader from "../common/Loader";
 import SkeletonItem from "../common/SkeletonItem";
+import ProfileViewModal from "../components/ProfileViewModal";
 
 const Connections = () => {
   const { connections, loading, error } = useSelector(
     (store) => store.connections,
   );
+  const [selectedConnection, setSelectedConnection] = useState(null);
   const dispatch = useDispatch();
   console.log(connections);
   useEffect(() => {
-    if (connections.length === 0)
-    dispatch(fetchConnections());
+    if (connections.length === 0) dispatch(fetchConnections());
   }, []);
 
   return (
@@ -28,7 +28,14 @@ const Connections = () => {
         {connections?.map((connection) => {
           console.log(connection?.photoUrl);
           return (
-            <li key={connection?._id} className="list-row">
+            <li
+              key={connection?._id}
+              className="list-row"
+              onClick={() => {
+                setSelectedConnection(connection);
+                document.getElementById("my_modal_1").showModal();
+              }}
+            >
               <div>
                 <img
                   className="size-10 rounded-box"
@@ -51,6 +58,8 @@ const Connections = () => {
           No connections at the moment.
         </div>
       )}
+
+      <ProfileViewModal connection={selectedConnection} />
     </div>
   );
 };

@@ -4,11 +4,14 @@ import ProtectedRoute from "./ProtectedRoute";
 import Feed from "../pages/Feed";
 import Profile from "../pages/Profile";
 import Login from "../pages/Login";
-import ErrorPage from "../pages/ErrorPage";
+import PageNotFound from "../pages/PageNotFound";
 import SignUp from "../pages/SignUp";
 import PublicRoute from "./PublicRoute";
 import Connections from "../pages/Connections";
 import Requests from "../pages/Requests";
+import ForgotPassword from "../pages/ForgotPassword";
+import ResetPassword from "../pages/ResetPassword";
+import ErrorPage from "../pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
@@ -65,6 +68,26 @@ const router = createBrowserRouter([
         <SignUp />
       </PublicRoute>
     ),
+  },
+  {
+    path: "/forgot-password",
+    element: (
+      <PublicRoute>
+        <ForgotPassword />
+      </PublicRoute>
+    ),
+  },
+  {
+    path: "/reset-password/:token",
+    element: (
+      <PublicRoute>
+        <ResetPassword />
+      </PublicRoute>
+    ),
+  },
+  {
+    path: "*",
+    element: <PageNotFound />,
   },
 ]);
 

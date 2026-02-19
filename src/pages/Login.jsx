@@ -75,11 +75,13 @@ const Login = () => {
           <span className="text-red-500">{errors.password?.message}</span>
 
           <div>
-            <a className="link link-hover">Forgot password?</a>
+            <Link to="/forgot-password" className="link link-primary link-hover">
+              Forgot password?
+            </Link>
           </div>
           <button
             className={`btn btn-soft btn-primary mt-4 disabled:opacity-70 disabled:cursor-not-allowed`}
-            disabled = {isSubmitting}
+            disabled={isSubmitting}
           >
             {isSubmitting ? "Signing In..." : "Sign In"}
           </button>
