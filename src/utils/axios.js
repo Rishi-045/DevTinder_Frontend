@@ -3,7 +3,7 @@ import appStore from "../store";
 import { logout } from "../store/auth/authSlice";
 
 const api = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: "/api",
   withCredentials: true,
 });
 
