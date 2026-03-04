@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchConnections } from "../store/connections/connectionsSlice";
 import SkeletonItem from "../common/SkeletonItem";
 import ProfileViewModal from "../components/ProfileViewModal";
+import { Link } from "react-router";
 
 const Connections = () => {
   const { connections, loading, error } = useSelector(
@@ -28,14 +29,7 @@ const Connections = () => {
         {connections?.map((connection) => {
           console.log(connection?.photoUrl);
           return (
-            <li
-              key={connection?._id}
-              className="list-row"
-              onClick={() => {
-                setSelectedConnection(connection);
-                document.getElementById("my_modal_1").showModal();
-              }}
-            >
+            <li key={connection?._id} className="list-row">
               <div>
                 <img
                   className="size-10 rounded-box"
@@ -49,6 +43,22 @@ const Connections = () => {
                   {connection?.email}
                 </div>
               </div>
+              <Link to={`/chat/${connection?._id}`}>
+                <button className="btn btn-outline btn-primary self-center btn-sm">
+                  Chat
+                </button>
+              </Link>
+              <Link>
+              <button
+                onClick={() => {
+                  setSelectedConnection(connection);
+                  document.getElementById("my_modal_1").showModal();
+                }}
+                className="btn btn-outline btn-secondary self-center  btn-sm"
+              >
+                View Profile
+              </button>
+              </Link>
             </li>
           );
         })}

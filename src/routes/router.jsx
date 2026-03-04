@@ -12,6 +12,7 @@ import Requests from "../pages/Requests";
 import ForgotPassword from "../pages/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword";
 import ErrorPage from "../pages/ErrorPage";
+import Chat from "../pages/Chat";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Requests />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "chat/:toUserId",
+        element: (
+          <ProtectedRoute>
+            <Chat />
           </ProtectedRoute>
         ),
       },
