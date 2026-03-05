@@ -12,15 +12,12 @@ const createSocketConnection = (loggedInUserId) => {
         },
       });
     } else {
-      socket = io(
-        "/",
-        { path: "/api/socket.io" },
-        {
-          query: {
-            userId: loggedInUserId,
-          },
+      socket = io("/", {
+        path: "/api/socket.io",
+        query: {
+          userId: loggedInUserId,
         },
-      );
+      });
     }
   }
   return socket;
