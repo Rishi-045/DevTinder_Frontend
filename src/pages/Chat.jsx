@@ -4,6 +4,7 @@ import createSocketConnection from "../utils/socket";
 import { useSelector } from "react-redux";
 import { set } from "zod";
 import api from "../utils/axios";
+import toast from "react-hot-toast";
 
 const Chat = () => {
   const { toUserId } = useParams();
@@ -54,6 +55,7 @@ const Chat = () => {
       currentUserId,
       toUserId,
       message,
+      senderName: user?.firstName,
       image: imageUrl,
     });
 
@@ -61,7 +63,7 @@ const Chat = () => {
   }
 
   useEffect(() => {
-    socketRef.current = createSocketConnection();
+    socketRef.current = createSocketConnection(currentUserId);
 
     const socket = socketRef.current;
 
@@ -71,9 +73,15 @@ const Chat = () => {
       setMessages((prev) => [...prev, data]);
     });
 
+    socket.on("newNotification", (data) => {
+      console.log("New notification:", data);
+     toast.success(data.message);
+    });
+
     return () => {
-      socket.off("messageReceived");
-      console.log("Disconnected from socket");
+      socket.on("disconnect", () => {
+        console.log("Disconnected from socket");
+      });
     };
   }, [currentUserId, toUserId]);
 
