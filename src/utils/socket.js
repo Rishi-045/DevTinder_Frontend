@@ -1,24 +1,20 @@
 import { io } from "socket.io-client";
 
-// const baseURL =
-//   location.hostname === "localhost" ? "http://localhost:8000/" : "/api/socket.io/";
 let socket;
+
 const createSocketConnection = (loggedInUserId) => {
   if (!socket) {
-    if (location.hostname === "localhost") {
-      socket = io("http://localhost:8000/", {
-        query: {
-          userId: loggedInUserId,
-        },
-      });
-    } else {
-      socket = io("/", {
-        path: "/api/socket.io",
-        query: {
-          userId: loggedInUserId,
-        },
-      });
-    }
+    const BASE_URL =
+      location.hostname === "localhost"
+        ? "http://localhost:8000"
+        : "https://devtinder-backend.onrender.com"; 
+
+    socket = io(BASE_URL, {
+      withCredentials: true,
+      query: {
+        userId: loggedInUserId,
+      },
+    });
   }
   return socket;
 };
