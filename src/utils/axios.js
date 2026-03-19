@@ -4,7 +4,7 @@ import { logout } from "../store/auth/authSlice";
 
 const api = axios.create({
   baseURL:
-    location.hostname === "localhost" ? "http://localhost:8000/" : "/api",
+    location.hostname === "localhost" ? "http://localhost:8000/" : location.hostname === "dev-tinder-orcin.vercel.app" ? "https://devtinder-backend-il4y.onrender.com/" : "/api",
   withCredentials: true,
 });
 
